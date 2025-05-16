@@ -28,13 +28,13 @@ sequenceDiagram
         and
             rect rgb(54,74,63)
       	        Operator -> PAY: Ref <br/> Enter "Idle" Sequence
-                note over OBC: Need to wait for a close pass before we go into downlinking, default is to go into Idle mode? or case where go directly into downlinking? (Q)
+                note over OBC: Need to wait for a close pass <br> before we go into downlinking, default is to <br> go into Idle mode? or case where <br> go directly into downlinking? (Q)
             end
         end
     else Battery Level ==  Low
         rect rgb(54,74,63)
 	        Operator -> PAY: Ref <br/> Enter "Safety" Sequence
-            note over OBC: should this be safety or idle? relates to Q regarding charging in safety and idle modes (Q)
+            note over OBC: should this be safety or idle? relates <br> to Q regarding charging in safety and idle modes (Q)
         end
     end
 ```
