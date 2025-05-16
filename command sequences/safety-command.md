@@ -22,11 +22,14 @@ sequenceDiagram
 
     OBC ->> OBC: Safety_<?>
     note over OBC: missing information on <br> this internal function (Q)
-    note over OBC: This internal function loops until <br> RF interrupts with a command to <br> OBC, any good way to show? (N)
+
+    loop Wait for Ping
+        Operator -> PAY: 
+    end
 	
 	note over RF: need to add information <br> about contact/failed contact (Q/N)
 	alt Operator comamnds "Safety" mode exit
-        Operator ->> MCC/GS: Cmd ExitSafety ()
+	Operator ->> MCC/GS: Cmd ExitSafety ()
 	MCC/GS ->> RF: TransmitCmd ExitSafety ()
 	RF ->> OBC: TransmitCmd ExitSafety ()
 
@@ -39,7 +42,7 @@ sequenceDiagram
         note over ADCS: missing information on <br> this internal function (Q)
         ADCS -->> OBC: Fbk ADCS_ExitSafety <br> (status = CmdRecieved)
 
-		note over OBC: Are there any internal OBC commands to <br> execute before transitioning to Idle Mode? (Q)
+		note over OBC: Are there any internal OBC commands to <br> execute before transitioning to Idle Mode? <br> need to ensure that we successfully exited (Q)
 
 		par
 			OBC -->> RF: Fbk ExitSafety <br> (status = Success)
@@ -47,7 +50,7 @@ sequenceDiagram
 			MCC/GS -->> Operator: TransmitFbk ExitSafety <br> (status = Success)
 		and
 			rect rgb(54,74,63)
-				Operator -> PAY: Ref <br/> Enter "Idle" Sequence
+				Operator -> PAY: Ref <br/> Enter "Idle" Mode
 			end
 		end
 	else else
