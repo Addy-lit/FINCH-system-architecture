@@ -40,11 +40,12 @@ sequenceDiagram
         ADCS -->> OBC: Fbk ADCS_ExitSafety <br> (Status = CmdRecieved)
 
 		note over OBC: Are there any internal OBC commands to <br> execute before transitioning to Idle Mode? (Q)
-		
+		note over OBC: Need to add considerations for failures
+
 		par
-			OBC -->> RF: Fbk ExitSafety <br> (Status = IdleMode)
-			RF -->> MCC/GS: TransmitFbk ExitSafety <br> (Status = IdleMode)
-			MCC/GS -->> Operator: TransmitFbk ExitSafety <br> (Status = IdleMode)
+			OBC -->> RF: Fbk ExitSafety <br> (Status = Success)
+			RF -->> MCC/GS: TransmitFbk ExitSafety <br> (Status = Success)
+			MCC/GS -->> Operator: TransmitFbk ExitSafety <br> (Status = Success)
 		and
 			rect rgb(54,74,63)
 				Operator -> PAY: Ref <br/> Enter "Idle" Sequence
