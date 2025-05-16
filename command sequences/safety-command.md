@@ -22,9 +22,9 @@ sequenceDiagram
 
     OBC ->> OBC: Safety_<?>
     note over OBC: missing information on <br> this internal function (Q)
-    note over OBC: This internal function loops until <br> RF interrupts with a command to OBC
+    note over OBC: This internal function loops until <br> RF interrupts with a command to <br> OBC, any good way to show? (N)
 	
-	note over RF: need to add information about contact/failed contact
+	note over RF: need to add information <br> about contact/failed contact (Q/N)
 	alt Operator comamnds "Safety" mode exit
         Operator ->> MCC/GS: Cmd ExitSafety ()
 	MCC/GS ->> RF: TransmitCmd ExitSafety ()
@@ -40,7 +40,6 @@ sequenceDiagram
         ADCS -->> OBC: Fbk ADCS_ExitSafety <br> (status = CmdRecieved)
 
 		note over OBC: Are there any internal OBC commands to <br> execute before transitioning to Idle Mode? (Q)
-		note over OBC: Need to add considerations for failures
 
 		par
 			OBC -->> RF: Fbk ExitSafety <br> (status = Success)
