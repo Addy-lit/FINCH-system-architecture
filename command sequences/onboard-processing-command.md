@@ -11,37 +11,24 @@ sequenceDiagram
         participant PAY
     end
 
-    alt Operator Commanded
-        Operator ->> MCC/GS: Cmd OnboardProcessing <br> (parameters = imageIdentifier)
-        MCC/GS ->> RF: TransmitCmd OnboardProcessing <br> (parameters = imageIdentifier)
-        alt Contact
-            RF ->> OBC: TransmitCmd OnboardProcessing <br> (parameters = imageIdentifier)
-        else Error
-            break
-                OBC ->> OBC: LogErrorInformation
-                rect rgb(54,74,63)
-    		        Operator -> PAY: Ref <br/> Enter "Safety" Sequence
-                end
-            end
-        end
-    else Internally Commanded
-        OBC ->> OBC: enteredMode "Onboard Processing" <br> (parameters = imageIdentifier)
-    end
+	note over OBC: either a command comes through <br> in idle from operator with this parameter, or <br> it comes from imaging mode with this parameter (N)
+	note over OBC: need clarification on storage of <br> images in PAY_MEM, is there one image? <br> multiple with identifiers?(Q)
+	OBC ->> OBC: enteredMode "Onboard Processing" <br> (parameters = imageIdentifier)
 
     OBC ->> OBC: CheckBatteryLevel
     alt Battery Level == Okay
-        OBC ->> PAY: TransmitCmd OnboardProcessing <br> (parameters = imageIdentifier)
+        OBC ->> PAY: Cmd OnboardProcessing <br> (parameters = imageIdentifier)
         PAY ->> PAY: ExecuteOnboardProcessing
         PAY ->> OBC: Fbk OnboardProcessing <br> (status = Success)
       
         par
-            OBC -->> RF: Fbk OnboardProcessing <br> (status = Success)
+            OBC -->> RF: TransmitFbk OnboardProcessing <br> (status = Success)
             RF -->> MCC/GS: TransmitFbk OnboardProcessing <br> (status = Success)
             MCC/GS -->> Operator: TransmitFbk OnboardProcessing <br> (status = Success)
         and
             rect rgb(54,74,63)
       	        Operator -> PAY: Ref <br/> Enter "Idle" Sequence
-                note over OBC: Need to wait for a close pass before we go into downlinking, default is to go into Idle mode?
+                note over OBC: Need to wait for a close pass before we go into downlinking, default is to go into Idle mode? or case where go directly into downlinking? (Q)
             end
         end
     else Battery Level ==  Low
