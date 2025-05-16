@@ -10,6 +10,8 @@ sequenceDiagram
         participant PAY
     end
 
+%% check power level to go into imaging, otherwise go to idle
+
     Operator->>MCC/GS: Load acquisition parameters
     MCC/GS->>RF: Send acquisition parameters
 
