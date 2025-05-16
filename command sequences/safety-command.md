@@ -27,8 +27,8 @@ sequenceDiagram
 	
 	alt Operator comamnds "Safety" mode exit
         Operator ->> MCC/GS: Cmd ExitSafety ()
-		MCC/GS ->> RF: TransmitCmd ExitSafety ()
-		RF ->> OBC: TransmitCmd ExitSafety ()
+	MCC/GS ->> RF: TransmitCmd ExitSafety ()
+	RF ->> OBC: TransmitCmd ExitSafety ()
 
         OBC ->> PAY: Cmd PAY_ExitSafety ()
         PAY ->> PAY: ExitSafety_PowerUp
@@ -47,7 +47,7 @@ sequenceDiagram
 			MCC/GS -->> Operator: TransmitFbk ExitSafety <br> (Status = IdleMode)
 		and
 			rect rgb(54,74,63)
-				Operator -> PAY: Ref <br/> Enter "Idle" Sequence <br/> parameters = 
+				Operator -> PAY: Ref <br/> Enter "Idle" Sequence
 			end
 		end
 	else else
