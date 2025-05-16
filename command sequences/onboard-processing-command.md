@@ -12,7 +12,7 @@ sequenceDiagram
     end
 
 	note over OBC: either a command comes through <br> in idle from operator with this parameter, or <br> it comes from imaging mode with this parameter (N)
-	note over OBC: need clarification on storage of <br> images in PAY_MEM, is there one image? <br> multiple with identifiers?(Q)
+	note over OBC: need clarification on storage of <br> images in PAY_MEM, is there one image? <br> multiple with identifiers? (Q)
 	OBC ->> OBC: enteredMode "Onboard Processing" <br> (parameters = imageIdentifier)
 
     OBC ->> OBC: CheckBatteryLevel
