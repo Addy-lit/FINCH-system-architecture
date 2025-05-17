@@ -3,7 +3,7 @@
 
 sequenceDiagram
 
-    Actor Operator
+    actor Operator
     participant MCC/GS
     box FINCH
         participant RF
@@ -12,49 +12,50 @@ sequenceDiagram
         participant PAY
     end
 
-    Operator->>MCC/GS: Load downlink parameters
-    
-    alt Contact
-        MCC/GS->>RF: Send downlink parameters
-        RF->>OBC: Schedule downlink
+    OBC ->> OBC: enteredMode "Downlinking" <br> (parameter = ?? <fill in when done>)
+    OBC ->> OBC: CheckDownlinkingConditions
 
-        alt Nominal Sequence Execution
-            alt Downlink conditions met
-                OBC->>ADCS: Orient to fine-pointing mode
-                OBC->>RF: Prepare to downlink
-                ADCS-->>OBC: Ready
-                RF-->>OBC: Ready
-    
-                alt Downlink telemetry data
-                    OBC->>RF: Telemetry data
-                    OBC->>RF: Trigger downlink
-                    RF->>MCC/GS: Downlink telemetry data
-                    RF-->>OBC: Done
-                    OBC->>OBC: Enter "Idle" sequence
+    alt Downlinking conditions met
+        note over ADCS: What is this fine pointing mode <br> that is mentioned? This exists in <br> previous versions but not quite clear (Q)
+        OBC ->> ADCS: Cmd FinePointingMode <br> (parameter = ??)
+        ADCS ->> ADCS: SomethingForPointing
+        ADCS -->> OBC: Fbk FinePointingMode <br> (status = Success)
 
-                end
-    
-                alt Downlink image data
-                    # what's the criteria for downlinking an image?
-                    PAY->>RF: Image data
-                    OBC->>RF: Trigger downlink
-                    RF->>MCC/GS: Downlink image data
-                    RF-->>OBC: Done
-                    OBC->>OBC: Enter "Idle" sequence
+        OBC ->> RF: Cmd PrepareDownlink <br> (parmeter = ??)
+        RF ->> RF: PrepareDownlink
+        RF -->> OBC: Fbk PrepareDownlink <br> (status = Success)
 
+        note over OBC: any further processing of data aside <br> from previous image processing that has to <br> occur before sending? (Q)
+        alt Telemtry downlink
+            OBC ->> OBC: GetTelemetryData
+        else Image downlink
+            note over OBC,PAY: Condition: Image priority <br> + available contact time (N)
+            OBC ->> PAY: Cmd GetImageData()
+            PAY ->> PAY: GetImageData
+            PAY -->> OBC: Fbk GetImageData <br> (parameter = ImageData)
+        end
 
-
-                end
-                
-            else Downlink conditions could not be met
-                OBC->>OBC: Log State
-                OBC->>OBC: Enter "Idle" sequence
+        OBC ->> RF: Cmd SendData <br> (parameter = Data)
+        RF -) MCC/GS: Msg Data
+        alt Contact
+            MCC/GS -) Operator: Msg Data
+            RF -->> OBC: Fbk SendData <br> (status = Success)
+        else Error
+            RF -->> OBC: Fbk SendData <br> (status = Error, <br> parameter = Communication)
+            OBC ->> OBC: LogError <br> (parameter = Communication)
+            rect rgb(54,74,63)
+                Operator -> PAY: Enter "Safety" Mode
             end
-        
         end
-        else Anomaly
-            OBC->>OBC: Log Error
-            OBC->>OBC: Enter "Safety" Sequence
+
+        rect rgb(54,74,63)
+	        Operator -> PAY: Enter "Idle" Mode
         end
+    else Conditions not met
+        OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
+        rect rgb(54,74,63)
+	        Operator -> PAY: Enter "Idle" Mode
+        end
+    end
 
 ```
