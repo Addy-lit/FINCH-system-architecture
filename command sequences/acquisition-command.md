@@ -10,36 +10,47 @@ sequenceDiagram
         participant PAY
     end
 
-%% check power level to go into imaging, otherwise go to idle
+    OBC ->> OBC: enteredMode "Image Acquisition" <br> (parameter = acquisitionParams, initialAttitude, manueverParams)
+    OBC ->> OBC: CheckAquisitionConditions
 
-    Operator->>MCC/GS: Load acquisition parameters
-    MCC/GS->>RF: Send acquisition parameters
+    alt Acquisition conditions met
+        OBC ->> ADCS: Cmd OrientSC <br> (parameter = initialAttitude)
+        ADCS ->> ADCS: ExecuteOrient <br> (parameter = initialAttitude)
+        ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
+        OBC ->> PAY: Cmd CoolCamera()
+        PAY ->> PAY: CoolCamera
+        note over PAY: info about this internal command? <br> what else happens for prepping PAY? (Q)
+        PAY -->> OBC: Fbk CoolCamera <br> (status = Success)
 
-    alt Contact
-        alt Nominal Sequence Execution
-            RF->>OBC: Schedule acquisition
+        OBC -) ADCS: Cmd ManueverSC <br> (parameter = manueverParams)
+        ADCS ->> ADCS: ExecuteManuever
+        OBC ->> PAY: Cmd ImageAcquisition <br> (paremeter = acquisitionParams)
+        PAY ->> PAY: ExecuteImageAcquisition
+        PAY -->> OBC: Fbk ImageAcquisition <br> (status = Success, parameter = imageIdentifier)
+        OBC ->> OBC: LogCompletion <br> (parameter = imageIdentifier)
 
-            alt Acquisition conditions met
-                OBC->>ADCS: Set to selected ADCS-10m module mode with attitude parameters
-                OBC->>PAY: Cool camera to init temp
-                ADCS-->>OBC: Ready
-                PAY-->>OBC: Ready
-    
-                OBC->>ADCS: Trigger acquisition maneuver
-                OBC->>PAY: Trigger image acquisition
-                ADCS-->>OBC: Done
-                OBC->>PAY: End image acquisition
-                PAY->>PAY: Store Image Data
-
-                OBC->>OBC: Enter "Idle" Sequence
-
-            else Acquisition conditions could not be met
-                OBC->>OBC: Log status
-                OBC->>OBC: Enter "Idle" Sequence
+        par
+            OBC -->> RF: TransmitFbk ImageAcquisition <br> (status = Success)
+            RF -->> MCC/GS: TransmitFbk ImageAcquisition <br> (status = Success)
+            MCC/GS -->> Operator: TransmitFbk ImageAcquisition <br> (status = Success)
+        and
+            note over OBC: How to determine if ready for processing? (Q)
+            alt <something to identify if ready for processing>
+                rect rgb(54,74,63)
+                    Operator -> PAY: Ref <br/> Enter "Processing" Mode <br> (parameter = imageIdentifier)
+                end
+            else <else case>
+                OBC ->> OBC: ScheduleModeChange <br> (parameter = "Processing", imageIdentifier, schedule)
+                rect rgb(54,74,63)
+                    Operator -> PAY: Ref <br/> Enter "Idle" Mode
+                end
             end
-        else Anomaly
-            OBC->>OBC: Log error
-            OBC->>OBC: Enter "Safety" Sequence
+        end
+
+    else Conditions not met
+        OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
+        rect rgb(54,74,63)
+	        Operator -> PAY: Ref <br/> Enter "Idle" Mode
         end
     end
 
