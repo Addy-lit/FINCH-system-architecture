@@ -14,7 +14,7 @@ sequenceDiagram
     ADCS ->> ADCS: ExecuteOrient <br> (parameter = attitudeSunPointing)
     ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
     OBC ->> OBC: SystemHealthCheck
-    note over OBC: Check has existed, confirm <br> what it means and if <br> it is necessary? (Q)
+    note over OBC: Check has existed, confirm <br> what it means and if <br> it should loop? (Q)
 
     loop Wait for Ping
         OBC ->> OBC: CheckScheduled
