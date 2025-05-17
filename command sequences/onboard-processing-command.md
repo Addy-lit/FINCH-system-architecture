@@ -15,8 +15,8 @@ sequenceDiagram
 	note over OBC: need clarification on storage of <br> images in PAY_MEM, is there one image? <br> multiple with identifiers? (Q)
 	OBC ->> OBC: enteredMode "Onboard Processing" <br> (parameter = imageIdentifier)
 
-    OBC ->> OBC: CheckBatteryLevel
-    alt Battery Level == Okay
+    OBC ->> OBC: CheckProcessingConditions
+    alt Processing conditions met
         OBC ->> PAY: Cmd OnboardProcessing <br> (parameter = imageIdentifier)
         PAY ->> PAY: ExecuteOnboardProcessing
         PAY ->> OBC: Fbk OnboardProcessing <br> (status = Success)
@@ -36,7 +36,8 @@ sequenceDiagram
             	end
 			end
         end
-    else Battery Level ==  Low
+    else Conditions not met
+		OBC ->> OBC: LogFailure
         rect rgb(54,74,63)
 	        Operator -> PAY: Ref <br/> Enter "Idle" Mode
         end
