@@ -29,9 +29,9 @@ sequenceDiagram
 	
 	note over RF: need to add information <br> about contact/failed contact (Q/N)
 	alt Operator comamnds "Safety" mode exit
-	Operator ->> MCC/GS: Cmd ExitSafety ()
-	MCC/GS ->> RF: TransmitCmd ExitSafety ()
-	RF ->> OBC: TransmitCmd ExitSafety ()
+		Operator ->> MCC/GS: Cmd ExitSafety ()
+		MCC/GS ->> RF: TransmitCmd ExitSafety ()
+		RF ->> OBC: TransmitCmd ExitSafety ()
 
         OBC ->> PAY: Cmd PAY_ExitSafety ()
         PAY ->> PAY: ExitSafety_PowerUp
@@ -50,7 +50,7 @@ sequenceDiagram
 			MCC/GS -->> Operator: TransmitFbk ExitSafety <br> (status = Success)
 		and
 			rect rgb(54,74,63)
-				Operator -> PAY: Ref <br/> Enter "Idle" Mode
+				Operator -> PAY: Enter "Idle" Mode
 			end
 		end
 	else else
@@ -62,4 +62,6 @@ sequenceDiagram
 		RF -->> MCC/GS: TransmitFbk CheckError <br> (Fbk = ErrorInformation)
 		MCC/GS -->> Operator: TransmitFbk CheckError <br> (Fbk = ErrorInformation)
 	end
+
+	note over OBC: need to indicate return <br> to loop waiting for ping (N)
 ```
