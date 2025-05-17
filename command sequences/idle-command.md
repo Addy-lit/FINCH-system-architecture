@@ -7,7 +7,7 @@ sequenceDiagram
         participant RF
         participant OBC 
         participant ADCS
-        participant Power
+        participant PAY
     end
 
     note over OBC: there needs to be information about <br> what attitude this is, does it have <br> to do with charging? do we need <br> to put other notes for charging? (Q)
