@@ -10,7 +10,7 @@ sequenceDiagram
         participant PAY
     end
 
-    OBC ->> OBC: enteredMode "Image Acquisition" <br> (parameter = acquisitionParams, initialAttitude, manueverParams)
+    OBC ->> OBC: enteredMode "Image Acquisition" <br> (parameter = acquisitionParams, <br> initialAttitude, manueverParams)
     OBC ->> OBC: CheckAquisitionConditions
 
     alt Acquisition conditions met
@@ -26,7 +26,7 @@ sequenceDiagram
         ADCS ->> ADCS: ExecuteManuever
         OBC ->> PAY: Cmd ImageAcquisition <br> (paremeter = acquisitionParams)
         PAY ->> PAY: ExecuteImageAcquisition
-        PAY -->> OBC: Fbk ImageAcquisition <br> (status = Success, parameter = imageIdentifier)
+        PAY -->> OBC: Fbk ImageAcquisition <br> (status = Success, <br> parameter = imageIdentifier)
         OBC ->> OBC: LogCompletion <br> (parameter = imageIdentifier)
 
         par
@@ -37,12 +37,12 @@ sequenceDiagram
             note over OBC: How to determine if ready for processing? (Q)
             alt <something to identify if ready for processing>
                 rect rgb(54,74,63)
-                    Operator -> PAY: Ref <br/> Enter "Processing" Mode <br> (parameter = imageIdentifier)
+                    Operator -> PAY: Enter "Processing" Mode <br> (parameter = imageIdentifier)
                 end
             else <else case>
-                OBC ->> OBC: ScheduleModeChange <br> (parameter = "Processing", imageIdentifier, schedule)
+                OBC ->> OBC: ScheduleModeChange <br> (parameter = "Processing", <br> imageIdentifier, schedule)
                 rect rgb(54,74,63)
-                    Operator -> PAY: Ref <br/> Enter "Idle" Mode
+                    Operator -> PAY: Enter "Idle" Mode
                 end
             end
         end
@@ -50,7 +50,7 @@ sequenceDiagram
     else Conditions not met
         OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
         rect rgb(54,74,63)
-	        Operator -> PAY: Ref <br/> Enter "Idle" Mode
+	        Operator -> PAY: Enter "Idle" Mode
         end
     end
 
