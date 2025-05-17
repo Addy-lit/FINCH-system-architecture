@@ -19,7 +19,7 @@ sequenceDiagram
         ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
         OBC ->> PAY: Cmd CoolCamera()
         PAY ->> PAY: CoolCamera
-        note over PAY: info about this internal command? <br> what else happens for prepping PAY? (Q)
+        note over PAY: Should this be a check before <br> executing acquisition? What are <br> the other internal processes for <br> PAY before acquisition? (Q)
         PAY -->> OBC: Fbk CoolCamera <br> (status = Success)
 
         OBC -) ADCS: Cmd ManueverSC <br> (parameter = manueverParams)
