@@ -34,7 +34,7 @@ sequenceDiagram
 		MCC/GS ->> RF: TransmitCmd ExitSafety ()
 		RF ->> OBC: TransmitCmd ExitSafety ()
 
-		note over OBC: We likely need an OBC set of <br> commands here that does something <br> to resolve an issue? (Q)
+		note over OBC: We likely need an OBC set of <br> commands here that does something <br> to resolve an issue (N)
 
         OBC ->> PAY: Cmd PAY_ExitSafety ()
         PAY ->> PAY: ExitSafety_PowerUp
