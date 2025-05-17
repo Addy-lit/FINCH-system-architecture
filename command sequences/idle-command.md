@@ -20,27 +20,27 @@ sequenceDiagram
         note over OBC: output parameters of schMode and <br> modeParams (N)
         opt Scheduled Mode Change
             rect rgb(54,74,63)
-              	Operator -> PAY: Ref <br/> Enter <schMode> Mode <br> (parameter = <modeParams>)
+              	Operator -> PAY: Enter <schMode> Mode <br> (parameter = <modeParams>)
             end
         end
     end
 
-    Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
-    MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
+    Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
+    MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
     alt Contact
-        RF ->> OBC: TransmitCmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
+        RF ->> OBC: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
         alt Scheduling
-            OBC ->> OBC: ScheduleModeChange <br> (parameter = cmdMode, modeParams, schedule)
+            OBC ->> OBC: ScheduleModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
         else Now
             rect rgb(54,74,63)
-                Operator -> PAY: Ref <br/> Enter <cmdMode> Mode <br> (parameter = <modeParams>)
+                Operator -> PAY: Enter <cmdMode> Mode <br> (parameter = <modeParams>)
             end
         end
     else Error
         RF -) OBC: Msg Error <br> (parameter = Communication)
         OBC ->> OBC: LogError <br> (parameter = Communication)
         rect rgb(54,74,63)
-            Operator -> PAY: Ref <br/> Enter "Safety" Mode
+            Operator -> PAY: Enter "Safety" Mode
         end
     end
 
