@@ -40,7 +40,7 @@ sequenceDiagram
                     Operator -> PAY: Enter "Processing" Mode <br> (parameter = imageIdentifier)
                 end
             else <else case>
-                OBC ->> OBC: ScheduleModeChange <br> (parameter = "Processing", <br> imageIdentifier, schedule)
+                OBC ->> OBC: ScheduleModeChange <br> (parameter = "Onboard Processing", <br> imageIdentifier, schedule)
                 rect rgb(54,74,63)
                     Operator -> PAY: Enter "Idle" Mode
                 end
