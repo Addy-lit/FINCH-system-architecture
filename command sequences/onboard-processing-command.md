@@ -20,6 +20,7 @@ sequenceDiagram
         OBC ->> PAY: Cmd OnboardProcessing <br> (parameter = imageIdentifier)
         PAY ->> PAY: ExecuteOnboardProcessing
         PAY ->> OBC: Fbk OnboardProcessing <br> (status = Success)
+	OBC ->> OBC: LogCompletion
       
         par
             OBC -->> RF: TransmitFbk OnboardProcessing <br> (status = Success)
