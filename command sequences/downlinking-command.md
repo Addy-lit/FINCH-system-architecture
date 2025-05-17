@@ -40,6 +40,7 @@ sequenceDiagram
         alt Contact
             MCC/GS -) Operator: Msg Data
             RF -->> OBC: Fbk SendData <br> (status = Success)
+			note over OBC: Logging completion of downlinking? <br> What happens with stored data? (Q)
         else Error
             RF -->> OBC: Fbk SendData <br> (status = Error, <br> parameter = Communication)
             OBC ->> OBC: LogError <br> (parameter = Communication)
