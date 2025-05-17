@@ -65,7 +65,6 @@ sequenceDiagram
 		OBC -->> RF: Fbk CheckError <br> (parameter = ErrorInformation)
 		RF -->> MCC/GS: TransmitFbk CheckError <br> (parameter = ErrorInformation)
 		MCC/GS -->> Operator: TransmitFbk CheckError <br> (parameter = ErrorInformation)
+		note over OBC: need to indicate return <br> to loop waiting for ping (N)
 	end
-
-	note over OBC: need to indicate return <br> to loop waiting for ping (N)
 ```
