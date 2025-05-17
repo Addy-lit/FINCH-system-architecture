@@ -30,19 +30,19 @@ sequenceDiagram
 			note over OBC: How to determine if ready for downlinking? (Q)
 			alt <something to determine time to enter downlink>
 				rect rgb(54,74,63)
-      	      		Operator -> PAY: Ref <br/> Enter "Downlinking" Mode
+      	      		Operator -> PAY: Enter "Downlinking" Mode
             	end
 			else <else case>
-				OBC ->> OBC: ScheduleModeChange <br> (parameter = "Downlinking", imageIdentifier, schedule)
+				OBC ->> OBC: ScheduleModeChange <br> (parameter = "Downlinking", <br> imageIdentifier, schedule)
 	    		rect rgb(54,74,63)
-      	     	  	Operator -> PAY: Ref <br/> Enter "Idle" Mode
+      	     	  	Operator -> PAY: Enter "Idle" Mode
            	 	end
 			end
 		end
     else Conditions not met
 		OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
         rect rgb(54,74,63)
-	        Operator -> PAY: Ref <br/> Enter "Idle" Mode
+	        Operator -> PAY: Enter "Idle" Mode
         end
     end
 ```
