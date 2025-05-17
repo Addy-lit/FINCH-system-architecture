@@ -17,7 +17,6 @@ sequenceDiagram
 
     loop Wait for Ping
         OBC ->> OBC: CheckScheduled
-        note over OBC: output parameters of schMode and <br> modeParams (N)
         opt Scheduled Mode Change
             rect rgb(54,74,63)
               	Operator -> PAY: Enter <schMode> Mode <br> (parameter = <modeParams>)
@@ -25,6 +24,7 @@ sequenceDiagram
         end
     end
 
+    note over Operator: Other types of pings? (Q)
     Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
     MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
     alt Contact
