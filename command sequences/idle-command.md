@@ -10,7 +10,6 @@ sequenceDiagram
         participant PAY
     end
 
-    note over OBC: there needs to be information about <br> what attitude this is, does it have <br> to do with charging? do we need <br> to put other notes for charging? (Q)
     OBC ->> ADCS: Cmd OrientSC <br> (parameter = attitudeSunPointing)
     ADCS ->> ADCS: ExecuteOrient <br> (parameter = attitudeSunPointing)
     ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
