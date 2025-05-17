@@ -38,7 +38,7 @@ sequenceDiagram
             end
         end
     else Error
-        RF --> OBC: Error <br> (parameter = Communication)
+        RF -) OBC: Msg Error <br> (parameter = Communication)
         OBC ->> OBC: LogError <br> (parameter = Communication)
         rect rgb(54,74,63)
             Operator -> PAY: Ref <br/> Enter "Safety" Mode
