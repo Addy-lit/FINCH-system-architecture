@@ -10,8 +10,7 @@ sequenceDiagram
     	participant PAY
 	end
 
-    OBC ->> PAY: Cmd PAY_Safety ()
-    PAY -->> OBC: Fbk PAY_Safety <br> (status = CmdRecieved)
+    OBC -) PAY: Cmd PAY_Safety ()
     PAY ->> PAY: Safety_PowerOff
   
     OBC ->> ADCS: Cmd ADCS_Safety ()
