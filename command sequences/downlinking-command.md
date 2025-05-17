@@ -18,15 +18,15 @@ sequenceDiagram
     alt Downlinking conditions met
         note over ADCS: What is this fine pointing mode <br> that is mentioned? This exists in <br> previous versions but not quite clear (Q)
         OBC ->> ADCS: Cmd FinePointingMode <br> (parameter = ??)
-        ADCS ->> ADCS: SomethingForPointing
+        ADCS ->> ADCS: <SomethingForPointing>
         ADCS -->> OBC: Fbk FinePointingMode <br> (status = Success)
 
         OBC ->> RF: Cmd PrepareDownlink <br> (parmeter = ??)
         RF ->> RF: PrepareDownlink
         RF -->> OBC: Fbk PrepareDownlink <br> (status = Success)
 
-        note over OBC: any further processing of data aside <br> from previous image processing that has to <br> occur before sending? (Q)
-        alt Telemtry downlink
+        note over OBC: What further processing of data aside <br> from previous image processing that has to <br> occur before sending?  (Q)
+        alt Telemetry downlink
             OBC ->> OBC: GetTelemetryData
         else Image downlink
             note over OBC,PAY: Condition: Image priority <br> + available contact time (N)
