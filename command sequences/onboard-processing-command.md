@@ -20,25 +20,27 @@ sequenceDiagram
         OBC ->> PAY: Cmd OnboardProcessing <br> (parameter = imageIdentifier)
         PAY ->> PAY: ExecuteOnboardProcessing
         PAY ->> OBC: Fbk OnboardProcessing <br> (status = Success)
-	OBC ->> OBC: LogCompletion
+		OBC ->> OBC: LogCompletion <br> (parameter = imageIdentifier)
       
         par
             OBC -->> RF: TransmitFbk OnboardProcessing <br> (status = Success)
             RF -->> MCC/GS: TransmitFbk OnboardProcessing <br> (status = Success)
             MCC/GS -->> Operator: TransmitFbk OnboardProcessing <br> (status = Success)
         and
+			note over OBC: How to determine if ready for downlinking? (Q)
 			alt <something to determine time to enter downlink>
-            	rect rgb(54,74,63)
-      	        	Operator -> PAY: Ref <br/> Enter "Downlinking" Mode
+				rect rgb(54,74,63)
+      	      		Operator -> PAY: Ref <br/> Enter "Downlinking" Mode
             	end
 			else <else case>
-	      		rect rgb(54,74,63)
-      	        	Operator -> PAY: Ref <br/> Enter "Idle" Mode
-            	end
+				OBC ->> OBC: ScheduleModeChange <br> (parameter = "Downlinking", imageIdentifier, schedule)
+	    		rect rgb(54,74,63)
+      	     	  	Operator -> PAY: Ref <br/> Enter "Idle" Mode
+           	 	end
 			end
-        end
+		end
     else Conditions not met
-		OBC ->> OBC: LogFailure
+		OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
         rect rgb(54,74,63)
 	        Operator -> PAY: Ref <br/> Enter "Idle" Mode
         end
