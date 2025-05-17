@@ -26,12 +26,12 @@ sequenceDiagram
         end
     end
 
-    Operator ->> MCC/GS: Cmd ImageAquisition <br> (parameter = cmdMode, modeParams, schedule)
-    MCC/GS ->> RF: TransmitCmd ImageAquisition <br> (parameter = cmdMode, modeParams, schedule)
+    Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
+    MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
     alt Contact
-        RF ->> OBC: TransmitCmd ImageAquisition <br> (parameter = cmdMode, modeParams, schedule)
+        RF ->> OBC: TransmitCmd ModeChange <br> (parameter = cmdMode, modeParams, schedule)
         alt Scheduling
-            OBC ->> OBC: ScheduleImageAquisition <br> (parameter = cmdMode, modeParams, schedule)
+            OBC ->> OBC: ScheduleModeChange <br> (parameter = cmdMode, modeParams, schedule)
         else Now
             rect rgb(54,74,63)
                 Operator -> PAY: Ref <br/> Enter <cmdMode> Mode <br> (parameter = <modeParams>)
