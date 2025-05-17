@@ -37,7 +37,7 @@ sequenceDiagram
             note over OBC: How to determine if ready for processing? (Q)
             alt <something to identify if ready for processing>
                 rect rgb(54,74,63)
-                    Operator -> PAY: Enter "Processing" Mode <br> (parameter = imageIdentifier)
+                    Operator -> PAY: Enter "Onboard Processing" Mode <br> (parameter = imageIdentifier)
                 end
             else <else case>
                 OBC ->> OBC: ScheduleModeChange <br> (parameter = "Onboard Processing", <br> imageIdentifier, schedule)
