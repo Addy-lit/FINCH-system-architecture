@@ -12,7 +12,7 @@ sequenceDiagram
         participant PAY
     end
 
-    OBC ->> OBC: enteredMode "Downlinking" <br> (parameter = ?? <fill in when done>)
+    OBC ->> OBC: enteredMode "Downlinking" <br> (parameter = imageIdentifier)
 
         OBC ->> ADCS: Cmd FinePointingMode <br> (parameter = ??)
         ADCS ->> ADCS: <SomethingForPointing>
