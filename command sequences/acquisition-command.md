@@ -11,15 +11,13 @@ sequenceDiagram
     end
 
     OBC ->> OBC: enteredMode "Image Acquisition" <br> (parameter = acquisitionParams, <br> initialAttitude, manueverParams)
-    OBC ->> OBC: CheckAquisitionConditions
 
-    alt Acquisition conditions met
         OBC ->> ADCS: Cmd OrientSC <br> (parameter = initialAttitude)
         ADCS ->> ADCS: ExecuteOrient <br> (parameter = initialAttitude)
         ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
         OBC ->> PAY: Cmd CoolCamera()
         PAY ->> PAY: CoolCamera
-        note over PAY: Should this be a check before <br> executing acquisition? What are <br> the other internal processes for <br> PAY before acquisition? (Q)
+
         PAY -->> OBC: Fbk CoolCamera <br> (status = Success)
 
         OBC -) ADCS: Cmd ManueverSC <br> (parameter = manueverParams)
@@ -34,7 +32,7 @@ sequenceDiagram
             RF -->> MCC/GS: TransmitFbk ImageAcquisition <br> (status = Success)
             MCC/GS -->> Operator: TransmitFbk ImageAcquisition <br> (status = Success)
         and
-            note over OBC: How to determine if ready for processing? (Q)
+
             alt <something to identify if ready for processing>
                 rect rgb(54,74,63)
                     Operator -> PAY: Enter "Onboard Processing" Mode <br> (parameter = imageIdentifier)
@@ -46,12 +44,5 @@ sequenceDiagram
                 end
             end
         end
-
-    else Conditions not met
-        OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
-        rect rgb(54,74,63)
-	        Operator -> PAY: Enter "Idle" Mode
-        end
-    end
 
 ```
