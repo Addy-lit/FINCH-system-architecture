@@ -28,7 +28,6 @@ sequenceDiagram
     note over Operator: Other types of pings? (Q)
     Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
     MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
-    alt Contact
         RF ->> OBC: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
         alt Scheduling
             OBC ->> OBC: ScheduleModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
@@ -37,12 +36,5 @@ sequenceDiagram
                 Operator -> PAY: Enter <cmdMode> Mode <br> (parameter = <modeParams>)
             end
         end
-    else Error
-        RF -) OBC: Msg Error <br> (parameter = Communication)
-        OBC ->> OBC: LogError <br> (parameter = Communication)
-        rect rgb(54,74,63)
-            Operator -> PAY: Enter "Safety" Mode
-        end
-    end
 
 ```
