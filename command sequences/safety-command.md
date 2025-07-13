@@ -28,7 +28,6 @@ sequenceDiagram
         Operator -> PAY: 
     end
 	
-	note over RF: Failed contact while in safety? (Q)
 	alt Operator comamnds "Safety" mode exit
 		Operator ->> MCC/GS: Cmd ExitSafety ()
 		MCC/GS ->> RF: TransmitCmd ExitSafety ()
