@@ -14,7 +14,6 @@ sequenceDiagram
     ADCS ->> ADCS: ExecuteOrient <br> (parameter = attitudeSunPointing)
     ADCS -->> OBC: Fbk OrientSC <br> (status = Success)
     OBC ->> OBC: SystemHealthCheck
-    note over OBC: Check has existed, confirm <br> what it means and if <br> it should loop? (Q)
 
     loop Wait for Ping
         OBC ->> OBC: CheckScheduled
@@ -25,7 +24,6 @@ sequenceDiagram
         end
     end
 
-    note over Operator: Other types of pings? (Q)
     Operator ->> MCC/GS: Cmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
     MCC/GS ->> RF: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
         RF ->> OBC: TransmitCmd ModeChange <br> (parameter = cmdMode, <br> modeParams, schedule)
