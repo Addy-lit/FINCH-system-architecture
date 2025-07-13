@@ -14,8 +14,7 @@ sequenceDiagram
 	note over OBC: need clarification on storage of <br> images in PAY_MEM, is there one <br> image? multiple with identifiers? (Q)
 	OBC ->> OBC: enteredMode "Onboard Processing" <br> (parameter = imageIdentifier)
 
-    OBC ->> OBC: CheckProcessingConditions
-    alt Processing conditions met
+
         OBC ->> PAY: Cmd OnboardProcessing <br> (parameter = imageIdentifier)
         PAY ->> PAY: ExecuteOnboardProcessing
         PAY ->> OBC: Fbk OnboardProcessing <br> (status = Success)
@@ -38,10 +37,6 @@ sequenceDiagram
            	 	end
 			end
 		end
-    else Conditions not met
-		OBC ->> OBC: LogFailure <br> (parameter = condNotMet)
-        rect rgb(54,74,63)
-	        Operator -> PAY: Enter "Idle" Mode
-        end
-    end
+
+
 ```
