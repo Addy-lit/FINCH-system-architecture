@@ -1,4 +1,4 @@
-# MCU Boot Command Sequence
+# Firmware Uplink Command Sequence
 ```mermaid
 
 sequenceDiagram
