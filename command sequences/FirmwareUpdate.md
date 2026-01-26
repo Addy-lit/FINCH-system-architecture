@@ -1,4 +1,5 @@
-#Firmware Update Command Sequence 
+# Firmware Update Command Sequence 
+```mermaid
 sequenceDiagram
     Actor Operator
     participant MCC/GS
@@ -34,4 +35,4 @@ sequenceDiagram
         end
     end
     OBC->>OBC: enter_mode("Idle")
-    
+    ```
