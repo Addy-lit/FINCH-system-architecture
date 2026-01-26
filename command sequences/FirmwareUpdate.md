@@ -35,4 +35,5 @@ sequenceDiagram
         end
     end
     OBC->>OBC: enter_mode("Idle")
+end
     ```
