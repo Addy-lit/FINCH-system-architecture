@@ -1,3 +1,4 @@
+#Firmware Update Command Sequence 
 sequenceDiagram
     Actor Operator
     participant MCC/GS
