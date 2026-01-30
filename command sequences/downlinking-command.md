@@ -12,33 +12,29 @@ sequenceDiagram
         participant PAY
     end
 
-    OBC ->> OBC: enteredMode "Downlinking" <br> (parameter = imageIdentifier)
+    OBC ->> OBC: enter_mode("downlinking")
 
-    OBC ->> ADCS: Cmd FinePointingMode <br> (parameter = ??)
-    ADCS ->> ADCS: <SomethingForPointing>
-    ADCS -->> OBC: Fbk FinePointingMode <br> (status = Success)
+    OBC ->> ADCS: cmd_adcs_mode("finepointing", orient_info, curr_time, TLE)
+    ADCS ->> ADCS: execute("finepointing")
+    ADCS -->> OBC: fbk_adcs_execute("finepointing")
 
-    OBC ->> RF: Cmd PrepareDownlink <br> (parmeter = ??)
-    RF ->> RF: PrepareDownlink
-    RF -->> OBC: Fbk PrepareDownlink <br> (status = Success)
+    OBC ->> RF: cmd_prepare_downlink()
+    RF ->> RF: prepare_downlink
+    RF -->> OBC: fbk_prepare_downlink()
 
-    alt Telemetry downlink
-        OBC ->> OBC: GetTelemetryData
-    else Image downlink
-        note over OBC,PAY: Condition: Image priority <br> + available contact time (N)
-        OBC ->> PAY: Cmd GetImageData()
-        PAY ->> PAY: GetImageData
-        PAY -->> OBC: Fbk GetImageData <br> (parameter = ImageData)
+    alt Telemetry Downlink
+        OBC ->> OBC: get_telemetry_data()
+    else Image Downlink
+
+        OBC ->> PAY: cmd_get_image_data()
+        PAY ->> PAY: get_image_data()
+        PAY -->> OBC: fbk_get_image_data()
     end
 
-    OBC ->> RF: Cmd SendData <br> (parameter = Data)
-    RF -) MCC/GS: Msg Data
+    OBC ->> RF: cmd_send_data(data)
+    RF -) MCC/GS: transmit_data(data)
 
-    MCC/GS -) Operator: Msg Data
-    RF -->> OBC: Fbk SendData <br> (status = Success)
-
-    rect rgb(54,74,63)
-		Operator -> PAY: Enter "Idle" Mode
+    OBC ->> OBC: enter_mode("idle")
 	end
 
 ```
