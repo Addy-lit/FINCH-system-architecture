@@ -34,8 +34,6 @@ sequenceDiagram
     OBC ->> RF: cmd_send_data(data)
     RF -) MCC/GS: transmit_data(data)
 
-    OBC ->> OBC: enter_mode("idle")
-
-	end
-
+end
+OBC ->> OBC: enter_mode("idle")
 ```
